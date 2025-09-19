@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mini Tasks+</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; background: #f6f7fb; }
+    .wrap { max-width: 1000px; margin: 40px auto; background: #fff; padding: 24px; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,.05); }
+    h1 { margin-top: 0; }
+    input, button, select { padding: 10px 12px; border-radius: 8px; border: 1px solid #ddd; }
+    button { background: #111; color: #fff; cursor: pointer; }
+    button.secondary { background: #fff; color: #111; border-color: #bbb; }
+    .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+    .card { border: 1px solid #eee; border-radius: 10px; padding: 12px; display: flex; justify-content: space-between; align-items: center; }
+    .muted { color: #666; font-size: 12px; }
+    .pill { font-size: 12px; border: 1px solid #ddd; padding: 4px 8px; border-radius: 999px; }
+    .left { display: grid; gap: 6px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Mini Tasks+</h1>
+    <div class="row">
+      <input id="email" placeholder="Email" value="admin@tv.com" />
+      <input id="password" placeholder="Password" type="password" value="Password123!" />
+      <button onclick="login()">Login</button>
+      <button class="secondary" onclick="logout()">Logout</button>
+      <div id="me" class="muted"></div>
+    </div>
+    <div class="muted">Try: admin@tv.com / manager@tv.com / worker@tv.com (Password123!)</div>
+
+    <hr />
+
+    <section id="projects" style="display:none;">
+      <h2>Projects</h2>
+      <div class="row">
+        <input id="projectName" placeholder="New project name" />
+        <button onclick="createProject()">Create</button>
+        <button class="secondary" onclick="loadProjects()">Refresh</button>
+      </div>
+      <div id="projectList" class="grid"></div>
+    </section>
+
+    <section id="tasks" style="display:none;">
+      <div class="row" style="justify-content: space-between;">
+        <h2>Tasks — <span id="currentProjectName"></span></h2>
+        <div class="row">
+          <select id="filterStatus" onchange="loadTasks()">
+            <option value="">All</option>
+            <option value="TODO">To Do</option>
+            <option value="IN_PROGRESS">In Progress</option>
+            <option value="DONE">Done</option>
+          </select>
+          <input id="searchQ" placeholder="Search title..." oninput="debouncedLoad()"/>
+        </div>
+      </div>
+      <div class="row">
+        <input id="taskTitle" placeholder="Task title" />
+        <input id="taskDue" type="date" />
+        <select id="taskAssignee"></select>
+        <button onclick="createTask()">Add Task</button>
+        <button class="secondary" onclick="loadTasks()">Refresh</button>
+      </div>
+      <div id="taskList" class="grid"></div>
+    </section>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
